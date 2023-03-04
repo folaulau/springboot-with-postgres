@@ -35,17 +35,12 @@ class GeolocationTests {
         user.setFirstName(RandomGeneratorUtils.getRandomFirstname());
         user.setLastName(RandomGeneratorUtils.getRandomLastname());
         user.setEmail(user.getFirstName() + user.getLastName() + "@gmail.com");
-
+        Address address = new Address(23.2, 12.5);
+        user.setAddress(address);
         user = userRepository.saveAndFlush(user);
 
         log.info("user={}", ObjectUtils.toJson(user));
 
-        Address address = new Address(23.2, 12.5);
-        address.setUser(user);
-
-        address = addressRepository.saveAndFlush(address);
-
-        log.info("address={}", ObjectUtils.toJson(address));
 
     }
 

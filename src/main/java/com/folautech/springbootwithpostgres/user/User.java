@@ -5,15 +5,9 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.ResultCheckStyle;
@@ -30,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -73,14 +68,9 @@ public class User implements Serializable {
     @Column(name = "last_updated_at", nullable = false)
     private LocalDateTime    lastUpdatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Address>     addresses;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address     address;
 
-    public void addAddress(Address address) {
-        if (this.addresses == null) {
-            this.addresses = new HashSet<>();
-        }
-        this.addresses.add(address);
-    }
 
 }

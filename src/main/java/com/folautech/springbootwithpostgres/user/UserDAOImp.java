@@ -16,4 +16,8 @@ public class UserDAOImp implements UserDAO {
     @Autowired
     private UserRepository userRepository;
 
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
